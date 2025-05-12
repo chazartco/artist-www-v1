@@ -39,6 +39,13 @@ export const loadContent = async (): Promise<ContentData> => {
 
 export const saveContent = async (content: ContentData): Promise<boolean> => {
   try {
+    // Ensure we're not overwriting the password if it's not included
+    if (!content.adminPassword) {
+      const currentContent = await loadContent();
+      content.adminPassword = currentContent.adminPassword;
+      content.password_changed = currentContent.password_changed;
+    }
+
     const response = await fetch('/api/content', {
       method: 'POST',
       headers: {
@@ -46,6 +53,7 @@ export const saveContent = async (content: ContentData): Promise<boolean> => {
       },
       body: JSON.stringify(content),
     });
+    
     if (!response.ok) throw new Error('Failed to save content');
     return true;
   } catch (error) {

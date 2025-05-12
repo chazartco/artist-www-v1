@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { checkAuth, authenticate, changePassword } from '../utils/auth';
+import { checkAuth, authenticate } from '../utils/auth';
 import { Lock } from 'lucide-react';
-import { useToast } from '../contexts/ToastContext';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -10,14 +9,10 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const [password, setPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [isChangingPassword, setIsChangingPassword] = useState(false);
   const location = useLocation();
-  const { showToast } = useToast();
 
   useEffect(() => {
     const verifyAuth = async () => {
@@ -30,40 +25,12 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { success, isDefault } = await authenticate(password);
-    if (success) {
-      if (isDefault) {
-        setIsChangingPassword(true);
-        setError('');
-      } else {
-        setIsAuthenticated(true);
-        setError('');
-      }
-    } else {
-      setError('Invalid password');
-    }
-  };
-
-  const handlePasswordChange = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (newPassword.length < 8) {
-      setError('Password must be at least 8 characters long');
-      return;
-    }
-    
-    if (newPassword !== confirmPassword) {
-      setError('Passwords do not match');
-      return;
-    }
-
-    const success = await changePassword(newPassword);
+    const { success } = await authenticate(password);
     if (success) {
       setIsAuthenticated(true);
-      setIsChangingPassword(false);
-      showToast('Password changed successfully');
+      setError('');
     } else {
-      setError('Failed to change password');
+      setError('Invalid password');
     }
   };
 
@@ -85,9 +52,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
             </div>
             <h1 className="text-2xl font-bold">Admin Login</h1>
             <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-              {isChangingPassword 
-                ? 'Please set a new password'
-                : 'Enter the admin password to continue'}
+              Enter the admin password to continue
             </p>
           </div>
 
@@ -97,61 +62,25 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
             </div>
           )}
 
-          {isChangingPassword ? (
-            <form onSubmit={handlePasswordChange} className="space-y-4">
-              <div>
-                <label htmlFor="newPassword" className="block text-sm font-medium mb-1">
-                  New Password
-                </label>
-                <input
-                  id="newPassword"
-                  type="password"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  className="input"
-                  placeholder="At least 8 characters"
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="confirmPassword" className="block text-sm font-medium mb-1">
-                  Confirm Password
-                </label>
-                <input
-                  id="confirmPassword"
-                  type="password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="input"
-                  placeholder="Confirm your new password"
-                  required
-                />
-              </div>
-              <button type="submit" className="w-full btn btn-primary">
-                Set New Password
-              </button>
-            </form>
-          ) : (
-            <form onSubmit={handleLogin} className="space-y-4">
-              <div>
-                <label htmlFor="password" className="block text-sm font-medium mb-1">
-                  Password
-                </label>
-                <input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="input"
-                  autoFocus
-                  required
-                />
-              </div>
-              <button type="submit" className="w-full btn btn-primary">
-                Login
-              </button>
-            </form>
-          )}
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium mb-1">
+                Password
+              </label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="input"
+                autoFocus
+                required
+              />
+            </div>
+            <button type="submit" className="w-full btn btn-primary">
+              Login
+            </button>
+          </form>
         </div>
       </div>
     );

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Check, Save, Lock } from 'lucide-react';
+import { Check, Save } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useToast } from '../../contexts/ToastContext';
 import { HexColorPicker } from 'react-colorful';
@@ -45,9 +45,6 @@ const AdminSettings: React.FC = () => {
   const { showToast } = useToast();
   const [newColors, setNewColors] = useState({ ...colors });
   const [jsonContent, setJsonContent] = useState('');
-  const [oldPassword, setOldPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
 
   useEffect(() => {
     const loadJsonContent = async () => {
@@ -59,7 +56,6 @@ const AdminSettings: React.FC = () => {
 
   const handleColorChange = (colorKey: string, value: string) => {
     setNewColors({ ...newColors, [colorKey]: value });
-    // Update colors in real-time
     updateColors({ [colorKey]: value });
   };
   
@@ -81,35 +77,6 @@ const AdminSettings: React.FC = () => {
       showToast('Content saved successfully');
     } catch (error) {
       showToast('Invalid JSON format');
-    }
-  };
-
-  const handlePasswordChange = async () => {
-    if (newPassword !== confirmPassword) {
-      showToast('New passwords do not match');
-      return;
-    }
-
-    if (newPassword.length < 8) {
-      showToast('Password must be at least 8 characters');
-      return;
-    }
-
-    try {
-      const content = await loadContent();
-      if (oldPassword !== content.adminPassword) {
-        showToast('Current password is incorrect');
-        return;
-      }
-
-      content.adminPassword = newPassword;
-      await saveContent(content);
-      showToast('Password changed successfully');
-      setOldPassword('');
-      setNewPassword('');
-      setConfirmPassword('');
-    } catch (error) {
-      showToast('Failed to change password');
     }
   };
 
@@ -186,46 +153,6 @@ const AdminSettings: React.FC = () => {
           <Save size={18} />
           Save Content
         </button>
-      </div>
-
-      <div className="admin-section">
-        <h2 className="text-2xl font-semibold mb-6">Change Password</h2>
-        <div className="max-w-md space-y-4">
-          <div>
-            <label className="block text-sm font-medium mb-1">Current Password</label>
-            <input
-              type="password"
-              value={oldPassword}
-              onChange={(e) => setOldPassword(e.target.value)}
-              className="input"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">New Password</label>
-            <input
-              type="password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              className="input"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">Confirm New Password</label>
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="input"
-            />
-          </div>
-          <button
-            onClick={handlePasswordChange}
-            className="btn btn-primary flex items-center gap-2"
-          >
-            <Lock size={18} />
-            Change Password
-          </button>
-        </div>
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ export default defineConfig({
       name: 'configure-server',
       configureServer(server) {
         const router = express.Router();
-        server.middlewares.use(express.json());
+        server.middlewares.use(express.json({ limit: '50mb' }));
 
         // API endpoints
         router.get('/api/content', (_, res) => {
@@ -28,7 +28,9 @@ export default defineConfig({
                 artworks: [],
                 exhibitions: [],
                 about: {},
-                theme: null
+                theme: null,
+                adminPassword: process.env.VITE_ADMIN_PASSWORD || 'admin123',
+                password_changed: false
               };
               fs.writeFileSync(dataFile, JSON.stringify(defaultData, null, 2));
               res.setHeader('Content-Type', 'application/json');

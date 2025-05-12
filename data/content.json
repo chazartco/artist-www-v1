@@ -2,7 +2,7 @@
   "artworks": [
     {
       "id": "1747019898111",
-      "title": "Your Light Shines Bright",
+      "title": "Your Light Shines Bright 2",
       "description": "You are proof that light can emerge from darkness.\nEach crack in your armor reveals your inner brilliance.\nYou are living art. Your light shines bright.\n\nYou are not broken, you are becoming.\nYou are loved.\n\nHealing begins when you let the colors flow.\n\nAI, Hand Drawing in Procreate, & Digital Editing in Photoshop\nResolution: 3840 x 4800\nFile Size: 30.3 MB\nPersonal Print Rights Included for Holders of this Token.",
       "imageUrl": "https://ipfs.io/ipfs/QmcF6NEyU9qSXWAcLZxXCYB8ioiJhSyBukQmLp6s5RTwHW",
       "displayUrl": "https://ipfs.io/ipfs/QmQC5kZWs38Wz2GeUmn4vS3gBAnujaGN6BPkj7aYqSS99W",
@@ -209,37 +209,7 @@
       "featured": true
     }
   ],
-  "exhibitions": [
-    {
-      "title": "NFT NYC 2024",
-      "location": "New York, NY",
-      "description": "\"Inner Cosmos\" was selected for NFT NYC 2024 Artist Village and was a featured artwork during the NFT NYC 2024 Times Square Billboard artwork display.",
-      "startDate": "2024-04-03",
-      "endDate": "2024-04-05",
-      "images": [
-        "https://ipfs.io/ipfs/QmZWUmwjZGv2xtyrKgUJ9aUbjxaZUeuBJSZaRsBC57AkvX",
-        "https://onelovedao.org/wp-content/uploads/2024/09/In-Control-Times-Square-Billboard-NYC-July-2024-1080-frame-at-0m2s.jpg",
-        "https://onelovedao.org/wp-content/uploads/2025/04/IMG_5904-scaled.jpg"
-      ],
-      "featured": true,
-      "status": "past",
-      "id": "1746950857531"
-    },
-    {
-      "title": "Miami Art Week 2024",
-      "location": "Miami, FL",
-      "description": "Chaz and Chazitili had many artworks displayed at numerous event during art week. Each individual event should be broken out into separate exhibitions, but including them all here just to give exhibition examples.",
-      "startDate": "2024-12-02",
-      "endDate": "2024-12-06",
-      "images": [
-        "https://chazitili.com/wp-content/uploads/2024/07/final-Divine-Interweave_1_1.gif",
-        "https://onelovedao.org/wp-content/uploads/2025/01/TheGatesDisplay.jpg"
-      ],
-      "featured": false,
-      "status": "past",
-      "id": "1746957878687"
-    }
-  ],
+  "exhibitions": [],
   "about": {
     "name": "Chazwesley99",
     "biography": "Co-founder One Love Art DAO | #SpacesHost | AI & Physical Artist | Musician | The Night Cap | Chaz.art & Co Dev & Founder | 30+ | GG",
@@ -273,6 +243,6 @@
       "accent": "#f59e0b"
     }
   },
-  "adminPassword": "admin123",
-  "password_changed": false
+  "adminPassword": "admin12345",
+  "password_changed": true
 }
